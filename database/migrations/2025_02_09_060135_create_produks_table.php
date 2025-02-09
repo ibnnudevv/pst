@@ -18,8 +18,8 @@ return new class extends Migration
             $table->text('deskripsi')->nullable(); // Deskripsi produk
             $table->integer('stok');
             $table->integer('harga');
-            $table->decimal('diskon', 5, 2)->default(0); // Diskon dalam persen
-            $table->decimal('rating', 2, 1)->default(0); // Rating produk
+            $table->integer('diskon')->default(0); // Diskon dalam persen
+            $table->integer('rating')->default(0); // Rating produk
             $table->timestamps();
         });
     }

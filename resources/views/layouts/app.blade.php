@@ -8,6 +8,8 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    @toastifyCss
+
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -46,6 +48,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     @stack('scripts')
+
+    @toastifyJs
 </body>
 
 </html>

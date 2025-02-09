@@ -9,12 +9,19 @@
         <section class="antialiased">
             <div class="mx-auto px-4 2xl:px-0">
                 <div class="mb-4 items-end justify-between space-y-4 sm:flex sm:space-y-0 md:mb-8">
-                    <x-breadcrumb pageTitle="Manajemen Produk" :breadcrumbs="[['label' => 'Home', 'url' => '#'], ['label' => 'Point Of Sales', 'url' => '#']]" />
+                    <x-breadcrumb pageTitle="Manajemen Produk" :breadcrumbs="[
+                        ['label' => 'Home', 'url' => '#'],
+                        ['label' => 'Point Of Sales', 'url' => route('dashboard')],
+                        [
+                            'label' => 'Laporan Penjualan',
+                            'url' => route('pos.report'),
+                        ],
+                    ]" />
 
                     <div class="flex items-center space-x-2">
-                        <x-secondary-button href="{{ route('pos.produk.create') }}" class="ms-3">
+                        {{-- <x-secondary-button href="{{ route('pos.produk.create') }}" class="ms-3">
                             {{ __('Tambah Produk') }}
-                        </x-secondary-button>
+                        </x-secondary-button> --}}
                         <x-secondary-button href="{{ route('pos.preview') }}" class="ms-3">
                             {{ __('Preview Penjualan') }}
                         </x-secondary-button>
@@ -42,12 +49,6 @@
                                     <p class="text-lg font-semibold text-gray-900">{{ $totalTransaction }}</p>
                                 </div>
                             </div>
-                            {{-- add link --}}
-                            <a href="{{ route('pos.report') }}"
-                                class="text-gray-500 text-sm
-                             hover:underline">Lihat
-                                Detail ↗
-                            </a>
                         </div>
                     </div>
                     <div class="p-4 bg-white rounded-lg border border-gray-200">
@@ -67,12 +68,6 @@
                                     </p>
                                 </div>
                             </div>
-                            {{-- add link --}}
-                            <a href="{{ route('pos.report') }}"
-                                class="text-gray-500 text-sm
-                             hover:underline">Lihat
-                                Detail ↗
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -83,19 +78,13 @@
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                             <tr>
                                 <th scope="col" class="px-16 py-3">
-                                    <span class="sr-only">Gambar</span>
+                                    Kode Transaksi
                                 </th>
                                 <th scope="col" class="text-sm px-6 py-3">
-                                    Produk
+                                    Tanggal
                                 </th>
                                 <th scope="col" class="text-sm px-6 py-3">
-                                    Stok
-                                </th>
-                                <th scope="col" class="text-sm px-6 py-3">
-                                    Harga
-                                </th>
-                                <th scope="col" class="text-sm px-6 py-3">
-                                    Diskon
+                                    Total
                                 </th>
                                 <th scope="col" class="text-sm px-6 py-3">
                                     Aksi
@@ -103,40 +92,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($products as $data)
+                            @forelse ($transactions as $data)
                                 <tr class="border-b  border-gray-200 text-xs items-center">
-                                    <td class="p-4">
-                                        <img src="{{ $data->gambar ? $data->gambar : 'https://placehold.co/800@3x.png' }}"
-                                            alt="{{ $data->produk }}" class="w-16 h-16 object-cover rounded-lg">
-                                    </td>
-                                    <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                        {{ $data->produk }}
+                                    <td class="px-16 py-2 font-medium text-gray-900 whitespace-nowrap">
+                                        {{ $data->kode_transaksi }}
                                         </ts>
-                                    <td class="px-6 py-4">
-                                        {{ $data->stok }}
+                                    <td class="px-2 py-2 ">
+                                        {{ $data->tanggal }}
                                     </td>
-                                    <td class="px-6 py-4">
-                                        {{ 'Rp ' . number_format($data->harga, 0, ',', '.') }}
+                                    <td class="px-2 py-2 ">
+                                        {{ 'Rp ' . number_format($data->total, 0, ',', '.') }}
                                     </td>
-                                    <td class="px-6 py-4">
-                                        @if ($data->diskon != 0)
-                                            {{ $data->diskon }}%
-                                        @else
-                                            -
-                                        @endif
-                                    </td>
-                                    <td class="flex items-center space-x-2 px-6 py-8">
-                                        <x-secondary-button href="{{ route('pos.produk.edit', $data->id) }}">
-                                            {{ __('Edit') }}
+                                    <td class="px-2 py-2 flex items-center space-x-2">
+                                        <x-secondary-button
+                                            href="{{ route('pos.detail-report', $data->kode_transaksi) }}">
+                                            {{ __('Info') }}
                                         </x-secondary-button>
-                                        <form action="{{ route('pos.produk.destroy', $data->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <x-danger-button type="submit"
-                                                onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
-                                                {{ __('Hapus') }}
-                                            </x-danger-button>
-                                        </form>
                                     </td>
                                 </tr>
                             @empty
