@@ -6,5 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Produk extends Model
 {
-    //
+    protected $table = 'produk';
+    protected $fillable = ['gambar', 'produk', 'stok', 'harga'];
+    public $timestamps = true;
+
+    public function detailTransaksi()
+    {
+        return $this->hasMany(DetailTransaksi::class, 'produk_id', 'id');
+    }
 }
