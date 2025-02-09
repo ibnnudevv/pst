@@ -7,7 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Produk extends Model
 {
     protected $table = 'produk';
-    protected $fillable = ['gambar', 'produk', 'stok', 'harga'];
+    protected $fillable = [
+        'gambar',
+        'produk',
+        'deskripsi',
+        'stok',
+        'harga',
+        'diskon',
+        'rating',
+    ];
     public $timestamps = true;
 
     public function detailTransaksi()
