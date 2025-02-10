@@ -16,6 +16,11 @@
                         {{ __('Point Of Sales') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('currency-rate.currency-rate.index')" :active="request()->routeIs('currency-rate.currency-rate.index')">
+                        {{ __('Currency Rate') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->

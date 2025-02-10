@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CurrencyRateController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/preview', [ProdukController::class, 'preview'])->name('pos.preview');
     Route::get('/dashboard', [ProdukController::class, 'index'])->name('dashboard');
     Route::resource('produk', ProdukController::class, ['as' => 'pos']);
+
+    // -- Currency Rate --
+    Route::get('/currency-rate/scrape', [CurrencyRateController::class, 'scrapeAndStore'])->name('currency-rate.scrape');
+    Route::get('/currency-rate/rates', [CurrencyRateController::class, 'rates'])->name('currency-rate.rates');
+    Route::resource('currency-rate', CurrencyRateController::class, ['as' => 'currency-rate']);
 });
 
 require __DIR__ . '/auth.php';
